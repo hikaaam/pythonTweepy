@@ -1,0 +1,139 @@
+<html>
+    <head>
+        <title>data mining</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">  
+        <script type="text/javascript" src="/eel.js"></script>
+         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script>
+            async function getTime() {
+              //function untuk menampilkan request dari python server ke javascipt website
+                var input=document.getElementById("input").value;  
+                var i;
+                var a;
+                var c;
+                let value = await eel.main(input)();
+                document.getElementById("jumlah").innerHTML = "Jumlah Semua Tweet : " +value[2][3]
+                 +" Tweets ( "+100 +"% )"; 
+                document.getElementById("positive").innerHTML = "Jumlah Tweet Positive : " +value[0].length
+                 +" Tweets ( "+value[2][0]  +"% )"; 
+                document.getElementById("negative").innerHTML = "Jumlah Tweet Negative : " +value[1].length
+                 +" Tweets ( " +value[2][1] +"% )"; 
+                document.getElementById("netral").innerHTML = "Jumlah Tweet Netral : " +(value[2][3]-value[0].length-value[1].length) 
+                +" Tweets ( "+value[2][2] +"% )"; 
+                console.log(value);
+                for(i=0;i< value[0].length;i++){
+                myFunction(i+1,value[0][i]['text'],i+1)
+                }
+                for(a=0;a< value[1].length;a++){
+                myFunction2(a+1,value[1][a]['text'],a+1)
+                }
+                for(c=0;c< value[3].length;c++){
+                myFunction3(c+1,value[3][c]['text'],c+1)
+                }
+
+            
+            }
+            function myFunction(val1,val2,row) {
+              //function untuk mengubah tampilan tabel positive
+            var table = document.getElementById("tblp");
+            var row = table.insertRow(row);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            cell1.innerHTML = val1;
+            cell2.innerHTML = val2;
+}
+function myFunction2(val1,val2,row) {
+   //function untuk mengubah tampilan tabel negative
+            var table = document.getElementById("tbln");
+            var row = table.insertRow(row);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            cell1.innerHTML = val1;
+            cell2.innerHTML = val2;
+}
+function myFunction3(val1,val2,row) {
+   //function untuk mengubah tampilan tabel netral
+            var table = document.getElementById("tblnet");
+            var row = table.insertRow(row);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            cell1.innerHTML = val1;
+            cell2.innerHTML = val2;
+}
+function refresh(){
+  location.reload(); 
+}
+
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="form-group">
+                    <br>
+                    <h2>Data Mining Sentiment Analysis From Twitter</h2>
+                    <hr>
+          <div class="row">
+            
+        <div class="col-sm-4">
+        <input type="text" class="form-control" name="input" id="input" >
+        </div>
+      
+        <button style="margin-left:20px;width:200px;"  class="btn btn-success" id="btn" onclick="getTime()">Find</button>
+        <button style="margin-left:40px;width:200px;" class="btn btn-danger" id="btn" onclick="refresh()">Refresh</button>
+          
+    </div>
+        <br>
+        <p id="jumlah">Jumlah Semua Tweet</p>
+        <p id="positive">Jumlah Positive Tweet</p>
+        <p id="negative">Jumlah negative Tweet</p>
+        <p id="netral">Jumlah netral Tweet</p>
+        <div class="row">
+ 
+        <div class="col-sm-4">
+        <h4>Positive Tweet :</h4>
+        <table id="tblp" class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>no</th>
+                    <th>Tweets</th>
+                  </tr>
+                </thead>
+                <tbody id="bdyp">
+  
+                </tbody>
+              </table>
+            </div>
+            <div class="col-sm-4">
+                    <h4>Negative Tweet :</h4>
+                    <table id="tbln" class="table table-bordered">
+                            <thead>
+                              <tr>
+                                <th>no</th>
+                                <th>Tweets</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+               
+                            </tbody>
+                          </table>
+                        </div>
+                        
+        <div class="col-sm-4">
+          <h4>Neutral Tweet :</h4>
+          <table id="tblnet" class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>no</th>
+                      <th>Tweets</th>
+                    </tr>
+                  </thead>
+                  <tbody id="bdyp">
+    
+                  </tbody>
+                </table>
+              </div>
+        </div>
+        </div>
+    </div>
+    </body>
+<html>
